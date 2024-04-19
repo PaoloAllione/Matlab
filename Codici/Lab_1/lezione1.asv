@@ -1,0 +1,170 @@
+clearvars 
+clc
+close all
+a0 = [1 2 3 4];
+a1 = 1:4;
+% a0 e a1 sono uguali 
+% se vogliamo introdurre uno 'step' allora scriviamo come 1:2:4 (step=2)
+a2 = 1:0.5:4;
+
+% help format  or doc format (apre la documentazione di matlab) 
+% il comando linspace(1,4,100) -> 100 numeri equidistanziati tra 1 e 4 
+linspace(1,4,100);
+
+
+% matrici 
+A = [1 2 3;
+    4 5 6;
+    7 8 9];
+% operazioni 
+B = A+3 ;% tutti gli elementi della matrice vengono aumentati di 3
+B = A*3 ;% tutti gli elementi della matrice vengono moltipilicati per 3
+
+A = [1 2 3 ; 4 5 6];
+B = [10:12;
+    13:15;
+  
+    ]
+A+B ; %OK
+%A*B;% NON OK perchè il numero delle colonne della prima è diverso dal numero di righe della seconda matrice 
+
+% quello che possiamo fare è fare la trasposta della matrice 
+
+A*B';
+
+
+% Numeri complessi 
+c = 1+ 4i;
+A = [1 2 3; 4 5 6];
+A_t = A';
+B = [1+1i 1+2i 1+3i; 
+    1+4i 1+5i 1+6i];
+B_t = B'; % oltre a trasoprre la matrice, la parte immaginaria diventa negativa
+B_t = transpose(B); % non cambia il segno della parte immaginaria
+
+% Esponenziale : si usa il comando .^ per fare l'esponenziale di ogni
+% elemento della matrice 
+
+
+A = ones(5) ; %matrice, ogni valore è 1
+A = ones(1,5); %riga 
+A = ones(5,1); % colonna 
+ 
+B = zeros(5) ; % solo zeri 
+
+I = eye(5); % Matrice identità
+
+% se vogliamo indicare un elemento di una matrice, ad esempio il primo 
+% usiamo: A(1,1)
+A = magic(5)
+A(1,1);
+A(1,:) % tuttta la prima riga  % Comando uguale -> A(1,1:end)
+
+
+time = linspace(0,5); % genera a prescindere 10o punti
+
+sensor_output = -(time-3).^2+10;
+plot(sensor_output)
+plot(sensor_output,'*')
+
+% calculate the maximum and the minimum values of sensor output
+max_sensor_out = max(sensor_output);
+min_sensor_out = min(sensor_output);
+
+% non siamo in un dominio continuo ma discreto 
+
+[max_sensor_out, max_index] = max(sensor_output);
+[min_sensor_out, min_index] = min(sensor_output);
+
+time_max =  time(max_index);
+time_min = time(min_index);
+
+%sensor_output = @(x)- (x-3).^2 +10 %handle function
+% plot(time,sensor_output,'-','Color','b','LineWidth', 2.5)
+% xlabel('time [s]')
+% ylabel('sensor output')
+% title ('model of the sensor')
+% grid on 
+% grid minor
+
+s0 = -(time-3).^2+10;
+s1 = -(time-3).^2+15;
+s2 = -(time-5).^2+15;
+
+figure('Name', 'this is my fisrt figure')
+subplot(3,1,1)
+plot(time,s0, 'DisplayName','model 1'), grid on;
+hold on
+plot(time,s1, 'DisplayName','model 2'), grid on;
+subplot(3,1,2)
+plot(time,s2, 'DisplayName','model 3'), grid on ;
+subplot(3,1,3)
+hold off
+%legend (["model 1", "model 2", "model 3"])
+legend show 
+xlabel('time [s]')
+ylabel('sensor output')
+title ('model of the sensor')
+% grid on 
+% grid minor
+
+
+
+% FUNCTION MODEL
+% parameters 
+% th = 0.8;
+% 
+% x = linspace(0,10);
+% y = cos(x);
+% 
+% % grapich interpretetion
+% figure(1)
+% plot(x,y,'bo')
+% hold on 
+% plot([x(1) x(end)], [th th], '--r')
+% 
+% % actions
+% 
+% %1. find values of y>th
+% y_greater = y>th ; % otteniamo un vettore logico (logical array)
+% 
+% %counter number of samples above threshold
+% num_greater= sum(y_greater) % numeri di punti che superano il nostro punto di soglia
+% pctg_greater = num_greater / length(y) * 100;
+
+
+
+lower_th = 0.4;
+upper_th= 0.8;
+
+x = linspace(0,10,200);
+y = cos(x);
+
+% grapich interpretetion
+figure('Name','Grapchal interpretation')
+plot(x,y,'bo')
+hold on 
+plot([x(1) x(end)], [lower_th lower_th], '--r')
+plot([x(1) x(end)], [upper_th upper_th], '--r')
+hold off
+y_inside = (y> lower_th) & (y<upper_th)
+num_greater= sum(y_inside) % numeri di punti che superano il nostro punto di soglia
+% pctg_greater = num_greater / length(y) * 100;
+
+% generiamo 10 numeri interi casuali 
+A = randi(5,1,10);
+low_pctg=20;
+up_pctg=20;
+target_val=4
+
+% display something if more than 30% of numbers in A are equal to 4
+num_equal_target = sum(A==target_val);
+pctg = num_equal_target / lenght(A) * 100
+if pctg < pctg
+    fprintif('number of value equal to 4 is larger than 30%')
+elseif pctg >= low_pctg && pctg <= up_pctg
+
+   fprint('condition violated', target_val,,up_pctg))
+else
+    fprint('number of values equal to %d is above%d%%\n', target_val,up_pctg)
+end
